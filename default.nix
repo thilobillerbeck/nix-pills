@@ -61,7 +61,7 @@
       # Work around bugs in mdbook-epub.
       mkdir nix-pills.epub-fix
       ( cd nix-pills.epub-fix
-        unzip -q "../book/Nix Pills.epub"
+        unzip -q "../book/epub/Nix Pills.epub"
         # Fix invalid ids.
         sed -Ei 's/(id(ref)?=")([0-9])/\1p\3/g' OEBPS/content.opf
         sed -Ei 's/(id="|href="#)([0-9])/\1fn\2/g' OEBPS/20-basic-dependencies-and-hooks.html
@@ -71,7 +71,7 @@
         sed -Ei 's/("[0-9a-z-]+\.)md(["#])/\1html\2/g' OEBPS/*.html
         # Remove unnecessary page breaks, the sections are short.
         substituteInPlace OEBPS/stylesheet.css --replace-fail "page-break-before: always;" ""
-        zip -q "../book/Nix Pills.epub" **/*
+        zip -q "../book/epub/Nix Pills.epub" **/*
       )
 
       runHook postBuild
@@ -85,7 +85,7 @@
       mkdir -p "$dst"
 
       manual="$dst/nix-pills.epub"
-      mv "book/Nix Pills.epub" "$manual"
+      mv "book/epub/Nix Pills.epub" "$manual"
 
       mkdir -p "$out/nix-support"
       echo "nix-build out $out" >> "$out/nix-support/hydra-build-products"
